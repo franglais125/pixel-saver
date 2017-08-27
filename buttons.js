@@ -112,6 +112,14 @@ var Buttons = new Lang.Class({
             container.connect('leave-event', b_shown);
           }
         }));
+        if (this._settings.get_boolean('hide-buttons')) {
+            container.opacity = 0;
+            container.connect('enter-event', b_shown);
+            container.connect('leave-event', b_hidden);
+          } else {
+            container.opacity = 255;
+            container.connect('leave-event', b_shown);
+          }
 
         let order = new Gio.Settings({schema_id: DCONF_META_PATH}).get_string('button-layout');
         LOG('Buttons layout : ' + order);
