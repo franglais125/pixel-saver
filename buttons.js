@@ -97,7 +97,7 @@ var Buttons = new Lang.Class({
             actor.add_actor(boxes[i]);
         });
 
-        // Adding buttons into a "container" that will ac
+        // Adding buttons into a "container"
         let container = new St.BoxLayout({track_hover: true, reactive: true});
         container.add_actor(actors[1]);
         // Enable\Disable "autohide" function when switch is changed from settings
