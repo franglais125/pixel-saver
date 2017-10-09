@@ -1,0 +1,34 @@
+.box-bin { }
+
+.button-box {
+    spacing: 6px;
+}
+
+.box-bin .window-button {
+    width: 24px;
+    height: 24px;
+}
+
+.minimize {
+    background-image: url("minimize.svg");
+}
+
+.minimize:hover, .minimize:active {
+    background-image: url("minimize_hover.svg");
+}
+
+.maximize {
+    background-image: url("unmaximize.svg");
+}
+
+.maximize:hover, .maximize:active {
+    background-image: url("unmaximize_hover.svg");
+}
+
+.close {
+    background-image: url("close.svg");
+}
+
+.close:hover, .close:active {
+    background-image: url("close_hover.svg");
+}
