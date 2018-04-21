@@ -78,8 +78,8 @@ var Buttons = new Lang.Class({
         this._destroyButtons();
 
         actors = [
-            new St.Bin({ style_class: 'box-bin'}),
-            new St.Bin({ style_class: 'box-bin'})
+            new St.Bin({ style_class: 'box-bin', y_align: St.Align.START }),
+            new St.Bin({ style_class: 'box-bin', y_align: St.Align.START })
         ];
 
         boxes = [
