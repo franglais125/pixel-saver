@@ -10,14 +10,7 @@ const Config = imports.misc.config;
 const Util = imports.misc.util;
 
 const Me = imports.misc.extensionUtils.getCurrentExtension();
-const Prefs = Me.imports.prefs;
 const Utils = Me.imports.utils;
-
-const IgnoreList = {
-    DISABLED:  0,
-    WHITELIST: 1,
-    BLACKLIST: 2,
-}
 
 const WindowState = {
     DEFAULT: 'default',
@@ -245,7 +238,7 @@ var Decoration = new Lang.Class({
     /**
      * Get the value of _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED before
      * no-title-bar did its magic.
-     * 
+     *
      * @param {Meta.Window} win - the window to check the property
      */
     _getOriginalState: function (win) {
@@ -293,40 +286,6 @@ var Decoration = new Lang.Class({
         return win._noTitleBarOriginalState = WindowState.DEFAULT;
     },
 
-    _filterBlacklist: function(win) {
-        if (this._settings.get_enum('ignore-list-type') === IgnoreList.DISABLED) {
-            return true;
-        }
-
-        let index_type = -1; // Exclude packages
-        if (this._settings.get_enum('ignore-list-type') === IgnoreList.WHITELIST) {
-            index_type = 0;
-        }
-
-        let ignoreList = this._settings.get_string('ignore-list');
-        ignoreList = Prefs.splitEntries(ignoreList);
-
-        let filterOut = false;
-
-        let appList = Utils.getAppList();
-        appList.forEach(function(appInfo) {
-            let index = ignoreList.indexOf(appInfo.get_name());
-            if (index > 0)
-                index = 0;
-            if (index !== index_type)
-                return;
-
-            let app = appSys.lookup_app(appInfo.get_id());
-            let windows = app.get_windows();
-            windows.forEach(function(iWin) {
-                if (iWin === win)
-                    filterOut = true;
-            });
-        });
-
-        return filterOut;
-    },
-
     /**
      * Tells the window manager to hide the titlebar on maximised windows.
      *
@@ -336,7 +295,7 @@ var Decoration = new Lang.Class({
      *
      * **Caveat**: doesn't work with Ubuntu's Ambiance and Radiance window themes -
      * my guess is they don't respect or implement this property.
-     * 
+     *
      * I don't know how to read the inital value, so I'm not sure how to resore it.
      *
      * @param {Meta.Window} win - window to set the HIDE_TITLEBAR_WHEN_MAXIMIZED property of.
@@ -344,7 +303,7 @@ var Decoration = new Lang.Class({
      */
     _setHideTitlebar: function(win, hide) {
         // Check if the window is a black/white-list
-        if (!this._filterBlacklist(win) && hide) {
+        if (Utils.isWindowIgnored(this._settings, win) && hide) {
             return;
         }
 
