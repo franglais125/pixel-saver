@@ -5,11 +5,15 @@ const Meta = imports.gi.Meta;
 const MAXIMIZED = Meta.MaximizeFlags.BOTH;
 const VERTICAL = Meta.MaximizeFlags.VERTICAL;
 
-function getWindow(includeSnapped) {
+// Get the window to display the title bar for (buttons etc) or to drag from the top panel
+function getWindow(includeSnapped, onlyPrimaryMonitor) {
+    let primaryMonitor = global.screen.get_primary_monitor()
+
     // get all window in stacking order.
     let windows = global.display.sort_windows_by_stacking(
         global.screen.get_active_workspace().list_windows().filter(function (w) {
-            return w.get_window_type() !== Meta.WindowType.DESKTOP;
+            return w.get_window_type() !== Meta.WindowType.DESKTOP &&
+                (!onlyPrimaryMonitor || w.get_monitor() === primaryMonitor);
         })
     );
 
