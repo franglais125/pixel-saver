@@ -9,6 +9,8 @@ const Shell = imports.gi.Shell;
 const Config = imports.misc.config;
 const Util = imports.misc.util;
 
+const ByteArray = imports.byteArray;
+
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 
@@ -185,7 +187,7 @@ var Decoration = new Lang.Class({
         if (xwindow) {
             let xwininfo = GLib.spawn_command_line_sync('xwininfo -children -id 0x%x'.format(xwindow));
             if (xwininfo[0]) {
-                let str = xwininfo[1].toString();
+                let str = ByteArray.toString(xwininfo[1]);
 
                 /**
                  * The X ID of the window is the one preceding the target window's title.
@@ -211,7 +213,7 @@ var Decoration = new Lang.Class({
         // is not available.
         let result = GLib.spawn_command_line_sync('xprop -root _NET_CLIENT_LIST');
         if (result[0]) {
-            let str = result[1].toString();
+            let str = ByteArray.toString(result[1]);
 
             // Get the list of window IDs.
             if (str.match(/0x[0-9a-f]+/g) == null)
@@ -224,7 +226,7 @@ var Decoration = new Lang.Class({
                 let result = GLib.spawn_command_line_sync(cmd);
 
                 if (result[0]) {
-                    let output = result[1].toString();
+                    let output = ByteArray.toString(result[1]);
                     let isManaged = output.indexOf("_NO_TITLE_BAR_ORIGINAL_STATE(CARDINAL)") > -1;
                     if (isManaged) {
                         continue;
@@ -267,7 +269,7 @@ var Decoration = new Lang.Class({
             return win._noTitleBarOriginalState = State.UNKNOWN;
         }
 
-        let str = xprops[1].toString();
+        let str = ByteArray.toString(xprops[1]);
         let m = str.match(/^_NO_TITLE_BAR_ORIGINAL_STATE\(CARDINAL\) = ([0-9]+)$/m);
         if (m) {
             let state = !!parseInt(m[1]);
