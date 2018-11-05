@@ -1,109 +1,108 @@
-# No Title Bar.
-# Copyright (C) 2017
-# This file is distributed under the same license as the No Title Bar package.
-# Fran Glais <franglais125@gmail.com>, 2017.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: No Title Bar\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-17 09:50+0200\n"
-"PO-Revision-Date: 2017-07-25 03:54-0400\n"
-"Last-Translator: Fran Glais <franglais125@gmail.com>\n"
+"POT-Creation-Date: 2017-09-17 09:51+0200\n"
+"PO-Revision-Date: 2017-09-17 10:04+0200\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: \n"
-"Language: fr\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: Settings.ui.h:1
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Storno"
 
 #: Settings.ui.h:2
 msgid "Save"
-msgstr "Enregistrer"
+msgstr "Uložit"
 
 #: Settings.ui.h:3
 msgid "Clear entry"
-msgstr "Supprimer l’entrée"
+msgstr "Vyčistit položku"
 
 #: Settings.ui.h:4
 msgid "Window control buttons"
-msgstr "Boutons de contrôle des fenêtres"
+msgstr "Tlačítka ovládání okna"
 
 #: Settings.ui.h:5
 msgid "Before app menu"
-msgstr "Avant le menu d'application"
+msgstr "Před nabídkou aplikace"
 
 #: Settings.ui.h:6
 msgid "After app menu"
-msgstr "Après le menu d'application"
+msgstr "Za nabídkou aplikace"
 
 #: Settings.ui.h:8
 msgid "Before status area"
-msgstr "Avant le menu système"
+msgstr "Před stavovou oblastí"
 
 #: Settings.ui.h:7
 msgid "Within status area"
-msgstr "Avant le menu système"
+msgstr "Ve stavové oblasti"
 
 #: Settings.ui.h:8
 msgid "After status area"
-msgstr "Après le menu système"
+msgstr "Za stavovou oblastí"
 
 #: Settings.ui.h:9
 msgid "Hidden"
-msgstr "Masqués"
+msgstr "Skryté"
 
 #: Settings.ui.h:10
 msgid "Autohide buttons"
-msgstr "Masquer automatiquement les boutons"
+msgstr "Tlačítka automaticky skrývat"
 
 #: Settings.ui.h:11
 msgid "Show buttons for snapped windows"
-msgstr "Afficher les boutons des fenêtres ancrées"
+msgstr "Zobrazovat tlačítka u přichycených oken"
 
 #: Settings.ui.h:12
 msgid "Replace App Menu name with Window name"
-msgstr "Utiliser le nom de la fenêtre au lieu de celui de l’application"
+msgstr "Nahradit název nabídky aplikace názvem okna"
 
 #: Settings.ui.h:13
-#, fuzzy
 msgid "Replace App Menu name for snapped windows"
-msgstr "Remplacer le nom de l’application pour les fenêtres ancrées"
+msgstr "U přichycených oken nahradit název nabídky aplikace"
 
 #: Settings.ui.h:14
 msgid "Remove title bars only on the main monitor"
-msgstr "Masquer les barres des fenêtres seulement dans le moniteur principal"
+msgstr "Odebrat lišty titulků pouze na hlavním monitoru"
 
 #: Settings.ui.h:15
 msgid "Basic settings"
-msgstr "Paramètres de base"
+msgstr "Základní nastavení"
 
 #: Settings.ui.h:16
 msgid "Automatic theme"
-msgstr "Thème automatique"
+msgstr "Motiv vzhledu automaticky"
 
 #: Settings.ui.h:17
 msgid "Theme"
-msgstr "Thème"
+msgstr "Motiv vzhledu"
 
 #: Settings.ui.h:18
 msgid "List type"
-msgstr "Type de liste"
+msgstr "Typ seznamu"
 
 #: Settings.ui.h:19
 msgid "Disabled"
-msgstr "Désactivé"
+msgstr "Vypnuté"
 
 #: Settings.ui.h:20
 msgid "Whitelist"
-msgstr "Liste blanche"
+msgstr "Vyjmenovat povolené"
 
 #: Settings.ui.h:21
 msgid "Blacklist"
-msgstr "Liste noire"
+msgstr "Vyjmenovat zakázané"
 
 #: Settings.ui.h:22
 msgid ""
@@ -111,22 +110,21 @@ msgid ""
 "Blacklist: all applications, except the ones on the list, will have the "
 "title bar removed."
 msgstr ""
-"Liste blanche: seules les applications de cette liste n’auront plus de barre "
-"de titre.\n"
-"Liste noire: toutes les applications, sauf celles de cette liste, n’auront "
-"plus de barre de titre."
+"Vyjmenovat povolené: pouze u oken aplikací na tomto seznamu bude odebrána lišta titulku.\n"
+"Vyjmenovat zakázané: krom aplikací na tomto seznamu, bude oknům všech ostatních "
+"lišta titulku odebrána."
 
 #: Settings.ui.h:24
 msgid "Lists"
-msgstr "Listes"
+msgstr "Seznamy"
 
 #: Settings.ui.h:25
 msgid "Maintained by"
-msgstr "Maintenu par"
+msgstr "Udržuje"
 
 #: Settings.ui.h:26
 msgid "Webpage"
-msgstr "Site internet"
+msgstr "Webová stránka"
 
 #: Settings.ui.h:27
 msgid ""
@@ -134,11 +132,10 @@ msgid ""
 "See the <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 "\">GNU General Public License, version 2 or later</a> for details.</span>"
 msgstr ""
-"<span size=\"small\">Ce programme est distribué SANS AUCUNE GARANTIE.\n"
-"Consultez la <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
-"\">Licence Générale Publique GNU version 2 ou plus récente</a> pour plus "
-"d'informations.</span>"
+"<span size=\"small\">Tento program přichází BEZ JAKÝCHKOLI ZÁRUK.\n"
+"Podrobnosti viz <a href=\"https://www.gnu.org/licenses/old-licenses/gpl-2.0."
+"html\">GNU General Public License, verze 2 nebo novější</a></span>"
 
 #: Settings.ui.h:29
 msgid "About"
-msgstr "À propos"
+msgstr "O rozšíření"
