@@ -1,1 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><defs><style>.a{fill:#eb6637;}.b{fill:none;stroke:#f7f7f7;stroke-miterlimit:10;stroke-width:1.3;}</style></defs><title>close</title><circle class="a" cx="10" cy="10" r="9.5"/><line class="b" x1="6.25" y1="13.75" x2="13.75" y2="6.25"/><line class="b" x1="6.25" y1="6.25" x2="13.75" y2="13.75"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 20 20"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="close_focused_prelight.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>close</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2746"
+     inkscape:window-height="1745"
+     id="namedview16"
+     showgrid="false"
+     inkscape:zoom="11.8"
+     inkscape:cx="-10.042373"
+     inkscape:cy="10"
+     inkscape:window-x="134"
+     inkscape:window-y="55"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <title
+     id="title">close_focused_prelight</title>
+  <circle
+     cx="10"
+     cy="10"
+     r="9.5"
+     id="circle8"
+     style="fill:#eb6637;" />
+  <path
+     id="path2"
+     overflow="visible"
+     font-weight="400"
+     style="color:#000000;font-weight:400;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;text-transform:none;text-orientation:mixed;white-space:normal;shape-padding:0;overflow:visible;isolation:auto;mix-blend-mode:normal;fill:#f7f7f7;fill-opacity:1;fill-rule:evenodd"
+     d="M 6.795,5.912 5.912,6.795 6.059,6.941 9.117,10 6.06,13.059 5.913,13.205 6.796,14.088 6.942,13.941 10,10.883 l 3.059,3.058 0.146,0.147 0.883,-0.883 L 13.941,13.059 10.883,10 13.941,6.941 14.088,6.795 13.205,5.912 13.059,6.059 10,9.117 6.941,6.06 Z"
+     inkscape:connector-curvature="0" />
+</svg>
