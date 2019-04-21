@@ -10,37 +10,37 @@
 }
 
 .minimize {
-    background-image: url("window-minimize-symbolic.svg");
+    background-image: url("minimize_focused_normal.svg");
 }
 
-.minimize:hover  {
-    background-image: url("window-minimize-symbolic.svg");
+.minimize:hover {
+    background-image: url("minimize_focused_prelight.svg");
 }
 
 .minimize:active {
-    background-image: url("window-minimize-symbolic.svg");
+    background-image: url("minimize_focused_pressed.svg");
 }
 
 .maximize {
-    background-image: url("window-restore-symbolic.svg");
+    background-image: url("maximize_focused_normal.svg");
 }
 
-.maximize:hover  {
-    background-image: url("window-restore-symbolic.svg");
+.maximize:hover {
+    background-image: url("maximize_focused_prelight.svg");
 }
 
 .maximize:active {
-    background-image: url("window-restore-symbolic.svg");
+    background-image: url("maximize_focused_pressed.svg");
 }
 
 .close {
-    background-image: url("window-close-symbolic.svg");
+    background-image: url("close_focused_normal.svg");
 }
 
-.close:hover  {
-    background-image: url("window-close-symbolic.svg");
+.close:hover {
+    background-image: url("close_focused_prelight.svg");
 }
 
 .close:active {
-    background-image: url("window-close-symbolic.svg");
+    background-image: url("close_focused_pressed.svg");
 }
