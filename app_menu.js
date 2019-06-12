@@ -23,9 +23,11 @@ var AppMenu = new Lang.Class({
         this._focusCallbackID = 0;
         this._tooltipCallbackID = 0;
         this._globalCallBackID = 0;
+        this._labelWidthCallbackID = 0;
         this._isEnabled = false;
 
         this._appMenu = Main.panel.statusArea.appMenu;
+        this._labelWidth = 0;
 
         this._activeWindow = null;
         this._awCallbackID = 0;
@@ -76,7 +78,7 @@ var AppMenu = new Lang.Class({
             let app = Shell.WindowTracker.get_default().get_window_app(win);
             title = app.get_name();
         }
-        this._appMenu._label.set_text(title);
+        this._appMenu._label.clutter_text.set_text(title);
         this._tooltip.text = title;
 
         return false;
@@ -246,6 +248,14 @@ var AppMenu = new Lang.Class({
         this._globalCallBackID = display.connect('restacked',
             Lang.bind(this, this._updateAppMenu));
 
+        this._labelWidthCallbackID = this._appMenu._label.connect("notify::width", () => {
+            var label_width = this._appMenu._label.width;
+            if (this._labelWidth !== label_width) {
+                this._labelWidth = label_width;
+                this._updateAppMenuWidth();
+            }
+        });
+
         this._labelId = this._settings.connect('changed::app-menu-width',
             Lang.bind(this, function() {
                 if (this._settings.get_boolean('change-appmenu'))
@@ -271,6 +281,11 @@ var AppMenu = new Lang.Class({
         if (this._globalCallBackID) {
             display.disconnect(this._globalCallBackID);
             this._globalCallBackID = 0;
+        }
+
+        if (this._labelWidthCallbackID) {
+            this._appMenu._label.disconnect(this._labelWidthCallbackID);
+            this._labelWidthCallbackID = 0;
         }
 
         if (this._tooltipCallbackID) {

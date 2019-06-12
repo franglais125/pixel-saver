@@ -40,6 +40,8 @@ var Decoration = new Lang.Class({
         this._changeWorkspaceID = 0;
         this._windowEnteredID = 0;
         this._settings = settings;
+        this._useMotifHints = Utils.versionCompare(Config.PACKAGE_VERSION, '3.30.0') > 0;
+        this._isWaylandComp = Meta.is_wayland_compositor();
 
         // For Gnome Shell < 3.24, we need to unmax and maximize windows again,
         // to redraw the window with no title bar.
@@ -52,6 +54,20 @@ var Decoration = new Lang.Class({
             Lang.bind(this, function() {
                 this._disable();
                 this._enable();
+            })
+        );
+
+        this._focusWindowID = global.display.connect(
+            'notify::focus-window',
+            Lang.bind(this, function () {
+                this._toggleTitlebar();
+            })
+        );
+
+        this._sizeChangeID = global.window_manager.connect(
+            'size-change',
+            Lang.bind(this, function () {
+                this._toggleTitlebar();
             })
         );
 
@@ -121,6 +137,16 @@ var Decoration = new Lang.Class({
         if (this._windowEnteredID) {
             display.disconnect(this._windowEnteredID);
             this._windowEnteredID = 0;
+        }
+
+        if (this._focusWindowID) {
+            global.display.disconnect(this._focusWindowID);
+            this._focusWindowID = 0;
+        }
+
+        if (this._sizeChangeID) {
+            global.window_manager.disconnect(this._sizeChangeID);
+            this._sizeChangeID = 0;
         }
 
         this._cleanWorkspaces();
@@ -250,6 +276,18 @@ var Decoration = new Lang.Class({
         return null;
     },
 
+    _toggleTitlebar() {
+        let win = global.display.focus_window;
+
+        if (!win)
+            return;
+
+        if (win.get_maximized())
+            this._setHideTitlebar(win, true);
+        else
+            this._setHideTitlebar(win, false);
+    },
+
     /**
      * Get the value of _GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED before
      * no-title-bar did its magic.
@@ -332,11 +370,10 @@ var Decoration = new Lang.Class({
         let winXID = this._guessWindowXID(win);
         if (winXID == null)
             return;
-        let cmd = ['xprop', '-id', winXID,
-                   '-f', '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED', '32c',
-                   '-set', '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED',
-                   (hide ? '0x1' : '0x0')];
+        this._toggleDecorations(win, hide);
+    },
 
+    _updateWindowAsync: function (win, cmd) {
         // Run xprop
         let [success, pid] = GLib.spawn_async(
             null,
@@ -361,6 +398,92 @@ var Decoration = new Lang.Class({
                 win.maximize(MAXIMIZED);
             }
         }));
+
+    },
+
+    _getHintValue(win, hint) {
+        let winId = this._guessWindowXID(win);
+        if (!winId) return;
+
+        let result = GLib.spawn_command_line_sync(`xprop -id ${winId} ${hint}`);
+        let string = ByteArray.toString(result[1]);
+        if (!string.match(/=/)) return;
+
+        string = string.split('=')[1].trim().split(',').map(function(part) {
+            part = part.trim();
+            return part.match(/\dx/) ? part : `0x${part}`
+        });
+
+        return string;
+    },
+
+    _setHintValue(win, hint, value) {
+        let winId = this._guessWindowXID(win);
+        if (!winId) return;
+
+        Util.spawn(['xprop', '-id', winId, '-f', hint, '32c', '-set', hint, value]);
+    },
+
+    _getMotifHints(win) {
+        if (!win._NoTitleBarOriginalState) {
+            let state = this._getHintValue(win, '_NO_TITLE_BAR_ORIGINAL_STATE');
+            if (!state) {
+                state = this._getHintValue(win, '_MOTIF_WM_HINTS');
+                state = state || ['0x2', '0x0', '0x1', '0x0', '0x0'];
+
+                this._setHintValue(win, '_NO_TITLE_BAR_ORIGINAL_STATE', state.join(', '));
+            }
+            win._NoTitleBarOriginalState = state;
+        }
+
+        return win._NoTitleBarOriginalState;
+    },
+
+    _handleWindow(win) {
+        let handleWin = false;
+
+        if (this._useMotifHints) {
+            let state = this._getMotifHints(win);
+            handleWin = !win.is_client_decorated();
+            handleWin = handleWin && (state[2] != '0x2' && state[2] != '0x0');
+        } else {
+            handleWin = win.decorated;
+        }
+
+        return handleWin;
+    },
+
+    _toggleDecorations: function (win, hide) {
+        let winId = this._guessWindowXID(win);
+
+        if (!this._handleWindow(win))
+            return;
+
+        GLib.idle_add(0, Lang.bind(this, function() {
+            let cmd = [];
+            if (this._useMotifHints)
+                cmd = this._toggleDecorationsMotif(winId, hide);
+            else
+                cmd = this._toggleDecorationsGtk(winId, hide);
+            this._updateWindowAsync(win, cmd);
+        }));
+    },
+
+    _toggleDecorationsGtk: function (winId, hide) {
+        let prop = '_GTK_HIDE_TITLEBAR_WHEN_MAXIMIZED';
+        let value = hide ? '0x1' : '0x0';
+
+        return ['xprop', '-id', winId, '-f', prop, '32c', '-set', prop, value];
+    },
+
+    _toggleDecorationsMotif: function (winId, hide) {
+        let prop = '_MOTIF_WM_HINTS';
+        let flag = '0x2, 0x0, %s, 0x0, 0x0';
+        let value = hide
+            ? flag.format(this._isWaylandComp ? '0x2' : '0x0')
+            : flag.format('0x1');
+
+        return ['xprop', '-id', winId, '-f', prop, '32c', '-set', prop, value];
     },
 
     /**** Callbacks ****/
@@ -425,7 +548,7 @@ var Decoration = new Lang.Class({
                 return false;
             }
 
-            let hide = true;
+            let hide = win.get_maximized();
             if (this._settings.get_boolean('only-main-monitor'))
                 hide = win.is_on_primary_monitor();
             this._setHideTitlebar(win, hide);
@@ -516,7 +639,7 @@ var Decoration = new Lang.Class({
     },
 
     _windowEnteredMonitor: function(metaScreen, monitorIndex, metaWin) {
-        let hide = true;
+        let hide = metaWin.get_maximized();
         if (this._settings.get_boolean('only-main-monitor'))
             hide = monitorIndex == Main.layoutManager.primaryIndex;
         this._setHideTitlebar(metaWin, hide);
